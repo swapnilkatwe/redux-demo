@@ -4,7 +4,7 @@ import Layout from "./components/Layout/Layout";
 import Products from "./components/Shop/Products";
 import { useSelector, useDispatch } from "react-redux";
 import NotificationBar from "./components/UI/NotificationBar";
-import { sendCartData } from "./store/cart-slice";
+import { sendCartData } from "./store/cart-actions";
 
 let initialRun = true;
 function App() {
