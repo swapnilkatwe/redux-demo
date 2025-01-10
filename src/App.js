@@ -4,9 +4,10 @@ import Layout from "./components/Layout/Layout";
 import Products from "./components/Shop/Products";
 import { useSelector, useDispatch } from "react-redux";
 import NotificationBar from "./components/UI/NotificationBar";
-import { sendCartData } from "./store/cart-actions";
+import { fetchCartData, sendCartData } from "./store/cart-actions";
 
-let initialRun = true;
+// var initialRun = true;
+
 function App() {
   const showCart = useSelector((state) => state.ui.cartIsVisible);
   const cart = useSelector((state) => state.cart); // useSelector subscriptions to redux. so when cart changes, app component rerenders. hence below api call re-executes.
@@ -15,12 +16,20 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (initialRun) {
-      initialRun = false;
-      return;
-    }
+    dispatch(fetchCartData());
+  },[dispatch]);
+
+  useEffect(() => {
+    // if (initialRun) {
+    //   initialRun = false;
+    //   return;
+    // } 
+
+  if(cart.changed) {
     dispatch(sendCartData(cart));
-  },[cart,dispatch]);
+  }
+
+  }, [cart, dispatch]);
 
   /* // CALLING API IN COMPONENT
   useEffect(() => {
