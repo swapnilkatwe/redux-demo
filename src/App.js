@@ -3,8 +3,8 @@ import Cart from "./components/Cart/Cart";
 import Layout from "./components/Layout/Layout";
 import Products from "./components/Shop/Products";
 import { useSelector, useDispatch } from "react-redux";
-import { uiActions } from "./store/ui-slice";
 import NotificationBar from "./components/UI/NotificationBar";
+import { sendCartData } from "./store/cart-slice";
 
 let initialRun = true;
 function App() {
@@ -14,6 +14,15 @@ function App() {
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (initialRun) {
+      initialRun = false;
+      return;
+    }
+    dispatch(sendCartData(cart));
+  },[cart,dispatch]);
+
+  /* // CALLING API IN COMPONENT
   useEffect(() => {
     async function updateCart() {
       
@@ -61,6 +70,7 @@ function App() {
       );
     });
   }, [cart, dispatch]);
+  */
 
   return (
     <>
